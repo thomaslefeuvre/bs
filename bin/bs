@@ -1,0 +1,11 @@
+#!/bin/sh
+
+if [ ! -x "$(which fzf 2>/dev/null)" ]; then
+  echo "please install: fzf (https://github.com/junegunn/fzf)" >&2
+  exit 1
+fi
+
+selected=$(git branch --list -v | cut -c 3- | fzf -0 -1 | head -n1 | cut -d " " -f1)
+if [ ! -z "$selected" ]; then
+  git checkout "$selected"
+fi
